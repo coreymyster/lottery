@@ -3,6 +3,7 @@
 from random import *
 import time
 
+# Creates a user for the game
 class UserAccount:
     def __init__(self, name):
         splitNames = name.split(' ')
@@ -89,32 +90,15 @@ class UnorderedList:
             else:
                 current = current.getNext()
         return found
-
-# Creates the BinaryHeap
-class BinaryHeap():
-    def __init__(self):
-        self.heap = [0]
-        self.currentSize = 0
     
-    # When a new item is added the percUp function checks if the parent is less than the new
-    # element. If so, then they swap places.
-    def percUp(self,i):
-        while i // 2 > 0:
-          if self.heap[i] < self.heap[i // 2]:
-             tmp = self.heap[i // 2]
-             self.heap[i // 2] = self.heap[i]
-             self.heap[i] = tmp
-          i = i // 2
-                               
-    # Adds a new item and calls the percUp function to see if the item needs to move up the tree
-    def insert(self,item):
-        self.heap.append(item)
-        self.currentSize = self.currentSize + 1
-        self.percUp(self.currentSize)
-        
-    # For display purposes to make it easier to read objects of the BinaryHeap class
-    def __repr__(self):
-        return str(self.heap)
+    def bubbleSort(alist):
+        for passnum in range(len(alist)-1,0,-1):
+            for i in range(passnum):
+                if alist[i]>alist[i+1]:
+                    temp = alist[i]
+                    alist[i] = alist[i+1]
+                    alist[i+1] = temp
+
         
 def main():
     print("**********  Welcome to the lottery!!!  **********")
@@ -125,25 +109,24 @@ to your account. The drawing occurs weekly.
 """)
     name = input("Since this is your first time here, tell us your first and last name: ")
     dollarAmount = input("How much do you want to add to the pool? Enter single numbers only (ex. 5 for $5) $")
+    
+    # Creates you as a user for the game
     user = UserAccount(name)
     userTickets = user.generateTicket(dollarAmount)
     
     ticketList = UnorderedList()
-    heap = BinaryHeap()
-
     
     print("""
-Your ticket numbers are below, good luck!
-""")
+Your ticket numbers are below {}, good luck!
+""".format(user.getName()))
     
+    # For testing purposes we're creating the competition
     jim = UserAccount("Jim Jones")
     ticketList.enqueue(randrange(1000, 1050))
     ticketList.enqueue(randrange(1000, 1050))
     ticketList.enqueue(randrange(1000, 1050))
     ticketList.enqueue(randrange(1000, 1050))
     ticketList.enqueue(randrange(1000, 1050))
-    
-   
    
     sandy = UserAccount("Sandy Sandoval")
     ticketList.enqueue(randrange(1000, 1050))
@@ -162,6 +145,7 @@ Your ticket numbers are below, good luck!
     ticketList.enqueue(randrange(1000, 1050))
     ticketList.enqueue(randrange(1000, 1050))
     
+    # For any ticket you bought, add it to the queue
     for ticket in userTickets:
         print(ticket)
         ticketList.enqueue(ticket)
@@ -184,5 +168,5 @@ Searching....""")
         print("Congratualtions! You won this week's lottery!")
     else:
         print("Sorry, you didn't win this week. Better luck next week!")
-    
+            
 main()
