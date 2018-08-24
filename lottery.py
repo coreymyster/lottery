@@ -6,13 +6,29 @@ import time
 # Creates a user for the game
 class UserAccount:
     def __init__(self, name):
+        # Requires the user to enter a first and last name
         splitNames = name.split(' ')
         self.first = splitNames[0]
         self.last = splitNames[1]
-        
+    
+    # Returns user's name
     def getName(self):
         return self.first + ' ' + self.last
     
+    # Set the tickets to the user
+    def setTickets(self, tickets):
+        self.tickets = tickets
+        return self.tickets
+    
+    # Get the tickets the user has
+    def getTickets(self, winningTicket):
+        if winningTicket in self.tickets:
+            print("Congratualtions to {}, who won this week's lottery!".format(self.first))
+            return True
+            
+    
+    # Generates lottery tickets for the user based on the number of tickets they want to buy.
+    # Random numbers are generated for each ticket.
     def generateTicket(self, dollarAmount):
         userTickets = []
         ticketNumber = randrange(1000, 1050)
@@ -21,7 +37,8 @@ class UserAccount:
             ticketNumber = randrange(1000, 1050)
             userTickets.append(ticketNumber)
         return userTickets
-        
+
+# Creates the node for the linked list
 class Node:
     def __init__(self, data):
         self.data = data
@@ -90,14 +107,6 @@ class UnorderedList:
             else:
                 current = current.getNext()
         return found
-    
-    def bubbleSort(alist):
-        for passnum in range(len(alist)-1,0,-1):
-            for i in range(passnum):
-                if alist[i]>alist[i+1]:
-                    temp = alist[i]
-                    alist[i] = alist[i+1]
-                    alist[i+1] = temp
 
         
 def main():
@@ -113,6 +122,8 @@ to your account. The drawing occurs weekly.
     # Creates you as a user for the game
     user = UserAccount(name)
     userTickets = user.generateTicket(dollarAmount)
+    user.setTickets(userTickets)
+    
     
     ticketList = UnorderedList()
     
@@ -164,9 +175,9 @@ Your ticket numbers are below {}, good luck!
 Searching....""")
     time.sleep(3)
     
-    if ticketList.search(winningTicket) == True:
-        print("Congratualtions! You won this week's lottery!")
+    if ticketList.search(winningTicket) == True and user.getTickets(winningTicket) == True:
+        print("You win the cash prize of ${}".format(ticketList.size()))
     else:
-        print("Sorry, you didn't win this week. Better luck next week!")
+        print("There is no winner this week, better luck next week!")
             
 main()
