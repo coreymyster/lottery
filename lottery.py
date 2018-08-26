@@ -165,7 +165,7 @@ Your ticket numbers are below {}, good luck!
     
     time.sleep(2)
     
-    
+    # Generates a random number for the winning ticket
     winningTicket = randrange(1000, 1050)
     print("Let the drawing begin!")
     
@@ -175,6 +175,7 @@ Your ticket numbers are below {}, good luck!
 Searching....""")
     time.sleep(3)
     
+    # Checks if thw winning ticket is in the linked list, and also checks if user holds the winning ticket
     if ticketList.search(winningTicket) == True and user.getTickets(winningTicket) == True:
         print("You win the cash prize of ${}".format(ticketList.size()))
     else:
